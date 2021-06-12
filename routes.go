@@ -2,28 +2,81 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
-func setupRoutespedidos(router *mux.Router) {
+func setupRoutescomidas(router *mux.Router) {
 	// First enable CORS. If you don't need cors, comment the next line
 	enableCORS(router)
 
 	router.HandleFunc("/AllComidas", func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("asdf")
 		AllComidas, err := GetAllComidas()
 		if err == nil {
 			respondWithSuccess(AllComidas, w)
 		} else {
-			log.Printf(err.Error())
 			respondWithError(err, w)
 		}
 	}).Methods(http.MethodGet)
 
 }
+
+func setupRoutescomidasbyid(router *mux.Router) {
+	enableCORS(router)
+
+	router.HandleFunc("/AllComidasById/{id}", func(w http.ResponseWriter, r *http.Request) {
+		idAsString := mux.Vars(r)["id"]
+		id, err := stringToInt64(idAsString)
+		if err != nil {
+			respondWithError(err, w)
+			// We return, so we stop the function flow
+			return
+		}
+		comidasbyid, err := getComidasById(id)
+		if err != nil {
+			respondWithError(err, w)
+		} else {
+			respondWithSuccess(comidasbyid, w)
+		}
+	}).Methods(http.MethodGet)
+}
+
+func setupRoutesbebidas(router *mux.Router) {
+	// First enable CORS. If you don't need cors, comment the next line
+	enableCORS(router)
+
+	router.HandleFunc("/AllBebidas", func(w http.ResponseWriter, r *http.Request) {
+		AllBebidas, err := GetAllBebidas()
+		if err == nil {
+			respondWithSuccess(AllBebidas, w)
+		} else {
+			respondWithError(err, w)
+		}
+	}).Methods(http.MethodGet)
+
+}
+
+func setupRoutesbebidasbyid(router *mux.Router) {
+	enableCORS(router)
+
+	router.HandleFunc("/AllBebidasById/{id}", func(w http.ResponseWriter, r *http.Request) {
+		idAsString := mux.Vars(r)["id"]
+		id, err := stringToInt64(idAsString)
+		if err != nil {
+			respondWithError(err, w)
+			// We return, so we stop the function flow
+			return
+		}
+		Bebidasbyid, err := getBebidasById(id)
+		if err != nil {
+			respondWithError(err, w)
+		} else {
+			respondWithSuccess(Bebidasbyid, w)
+		}
+	}).Methods(http.MethodGet)
+}
+
 
 func enableCORS(router *mux.Router) {
 	router.PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, req *http.Request) {

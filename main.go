@@ -23,7 +23,10 @@ func main() {
 	}
 	// Define routes
 	router := mux.NewRouter()
-	setupRoutespedidos(router)
+	setupRoutescomidas(router)
+	setupRoutescomidasbyid(router)
+	setupRoutesbebidas(router)
+	setupRoutesbebidasbyid(router)
 	//
 	//
 	//
