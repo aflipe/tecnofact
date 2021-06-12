@@ -27,6 +27,11 @@ func main() {
 	setupRoutescomidasbyid(router)
 	setupRoutesbebidas(router)
 	setupRoutesbebidasbyid(router)
+	setupRoutesbebidasTipobyid(router)
+	setupRoutesbebidastipo(router)
+	setupRoutesRestaurante(router)
+	setupRestauranteTipobyid(router)
+	setupCreateOrdenar(router)
 	//
 	//
 	//

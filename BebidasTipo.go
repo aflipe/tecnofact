@@ -1,4 +1,4 @@
-package entities
+package main
 
 type bebidastipo struct {
 	Id          int64  `json:"id"`
